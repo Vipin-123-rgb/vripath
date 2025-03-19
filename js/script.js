@@ -101,3 +101,10 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
+
+
+fetch("https://chatbot-backend-ex31.onrender.com/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: message })
+})
