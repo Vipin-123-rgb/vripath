@@ -66,3 +66,36 @@ fetch('https://formspree.io/f/xqapeezp', { ... })
             contactForm.reset();
         }
     });
+
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if (!message) return;
+
+    const chatBox = document.getElementById("chatBox");
+    chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
+    input.value = "";
+
+    fetch("https://YOUR_BACKEND_URL/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        chatBox.innerHTML += `<div class="message bot">Chatbot: ${data.response}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(error => {
+        chatBox.innerHTML += `<div class="message bot">Chatbot: Bhai, kuch gadbad ho gaya!</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+}
+
+// Enter key se bhi send karne ke liye
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
