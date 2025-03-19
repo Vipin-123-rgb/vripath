@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Background Video -->
-    <video autoplay muted loop id="background-video">
+    <video autoplay muted loop id="background-video" playsinline>
         <source src="videos/background.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -21,7 +21,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </div>
@@ -31,6 +31,17 @@
         <h1>Welcome to My Portfolio</h1>
         <p>I’m Vipin Tripathi, a student.</p>
         <a href="projects.html" class="btn">See My Work</a>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact" id="contact">
+        <h2>Contact Me</h2>
+        <form action="https://formspree.io/f/your-form-id" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
     </section>
 
     <!-- Scripts -->
