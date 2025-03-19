@@ -53,3 +53,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+
+const submitButton = contactForm.querySelector('button');
+submitButton.textContent = 'Sending...';
+fetch('https://formspree.io/f/xqapeezp', { ... })
+    .then(response => {
+        submitButton.textContent = 'Send Message'; 
+        if (response.ok) {
+            alert('Message sent successfully!');
+            contactForm.reset();
+        }
+    });
