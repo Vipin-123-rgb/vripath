@@ -3,7 +3,7 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #1a1a2e, #16213e); /* Fallback background */
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: #e0e0e0;
     overflow-x: hidden;
 }
@@ -77,10 +77,50 @@ body {
     margin: 10px 0 20px;
 }
 
-/* Animation for Hero */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* Contact Section */
+.contact {
+    position: relative;
+    z-index: 1;
+    padding: 60px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.contact h2 {
+    color: #00ffcc;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact input,
+.contact textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.contact input:focus,
+.contact textarea:focus {
+    border-color: #ff007a;
+}
+
+.contact textarea {
+    resize: vertical;
 }
 
 /* Button Styling */
@@ -93,11 +133,19 @@ body {
     border-radius: 25px;
     font-weight: 600;
     transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
+}
+
+/* Animation for Hero */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 /* Responsive Design */
@@ -114,6 +162,10 @@ body {
     }
     .hero p {
         font-size: 1rem;
+    }
+    .contact {
+        padding: 30px 10px;
+        margin: 10px;
     }
     #background-video {
         height: 100vh;
