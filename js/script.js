@@ -1,6 +1,6 @@
 console.log("Portfolio Loaded!");
 
-
+// Project hover effects
 document.querySelectorAll('.project').forEach(item => {
     item.addEventListener('mouseover', () => {
         item.style.backgroundColor = '#f0f0f0';
@@ -10,63 +10,72 @@ document.querySelectorAll('.project').forEach(item => {
     });
 });
 
-
+// Fetch navigation
 fetch('nav.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
     });
 
-
+// Contact form submission
 document.addEventListener('DOMContentLoaded', function () {
-    // Form ko select karo
     const contactForm = document.querySelector('.contact form');
 
-    // Submit event listener add karo
-    contactForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // Default form submission rok do (page reload nahi hoga)
+    if (contactForm) {  // Check if form exists to avoid errors on other pages
+        contactForm.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        // Form data collect karo
-        const formData = new FormData(this);
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button');
+            submitButton.textContent = 'Sending...';
 
-        
-        fetch('https://formspree.io/f/xqapeezp', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json' 
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                
-                alert('Message sent successfully! Thanks for reaching out.');
-                contactForm.reset(); // 
-            } else {
-              
-                alert('Oops! Something went wrong. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('There was a problem sending your message. Please try later.');
+            fetch('https://formspree.io/f/xqapeezp', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                submitButton.textContent = 'Send Message';
+                if (response.ok) {
+                    alert('Message sent successfully! Thanks for reaching out.');
+                    contactForm.reset();
+                } else {
+                    alert('Oops! Something went wrong. Please try again.');
+                }
+            })
+            .catch(error => {
+                submitButton.textContent = 'Send Message';
+                console.error('Error:', error);
+                alert('There was a problem sending your message. Please try later.');
+            });
         });
-    });
+    }
 });
 
+// Chatbot toggle functionality
+document.addEventListener('DOMContentLoaded', function () {
+    const chatbotIcon = document.getElementById("chatbotIcon");
+    const chatContainer = document.getElementById("chatContainer");
 
+    if (chatbotIcon && chatContainer) {  // Check if elements exist
+        chatbotIcon.addEventListener("click", function() {
+            if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+                chatContainer.style.display = "block";
+            } else {
+                chatContainer.style.display = "none";
+            }
+        });
 
-const submitButton = contactForm.querySelector('button');
-submitButton.textContent = 'Sending...';
-fetch('https://formspree.io/f/xqapeezp', { ... })
-    .then(response => {
-        submitButton.textContent = 'Send Message'; 
-        if (response.ok) {
-            alert('Message sent successfully!');
-            contactForm.reset();
-        }
-    });
-
+        // Enter key se send karne ke liye
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    }
+});
 
 function sendMessage() {
     const input = document.getElementById("userInput");
@@ -92,10 +101,3 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
-
-// Enter key se bhi send karne ke liye
-document.getElementById("userInput").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        sendMessage();
-    }
-});
