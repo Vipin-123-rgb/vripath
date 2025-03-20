@@ -1,6 +1,6 @@
 console.log("Portfolio Loaded!");
 
-// Project hover effects
+// Project hover effects (if used in projects.html)
 document.querySelectorAll('.project').forEach(item => {
     item.addEventListener('mouseover', () => {
         item.style.backgroundColor = '#f0f0f0';
@@ -17,11 +17,27 @@ fetch('nav.html')
         document.getElementById('nav-placeholder').innerHTML = data;
     });
 
-// Contact form submission
+// Contact form submission and toggle
 document.addEventListener('DOMContentLoaded', function () {
     const contactForm = document.querySelector('.contact form');
+    const contactIcon = document.getElementById("contactIcon");
+    const contactSection = document.getElementById("contact");
 
-    if (contactForm) {  // Check if form exists to avoid errors on other pages
+    // Contact toggle functionality
+    if (contactIcon && contactSection) {
+        contactIcon.addEventListener("click", function() {
+            if (contactSection.style.display === "none" || contactSection.style.display === "") {
+                contactSection.style.display = "block";
+                contactIcon.style.display = "none"; // Hide icon when form opens
+            } else {
+                contactSection.style.display = "none";
+                contactIcon.style.display = "block"; // Show icon when form closes
+            }
+        });
+    }
+
+    // Form submission
+    if (contactForm) {
         contactForm.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -41,6 +57,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     alert('Message sent successfully! Thanks for reaching out.');
                     contactForm.reset();
+                    contactSection.style.display = "none"; // Hide form after submission
+                    contactIcon.style.display = "block"; // Show icon again
                 } else {
                     alert('Oops! Something went wrong. Please try again.');
                 }
@@ -54,17 +72,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Chatbot toggle functionality
+// Chatbot toggle and functionality
 document.addEventListener('DOMContentLoaded', function () {
     const chatbotIcon = document.getElementById("chatbotIcon");
     const chatContainer = document.getElementById("chatContainer");
 
-    if (chatbotIcon && chatContainer) {  // Check if elements exist
+    if (chatbotIcon && chatContainer) {
         chatbotIcon.addEventListener("click", function() {
             if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
                 chatContainer.style.display = "block";
+                chatbotIcon.style.display = "none"; // Hide icon when chat opens
             } else {
                 chatContainer.style.display = "none";
+                chatbotIcon.style.display = "block"; // Show icon when chat closes
             }
         });
 
@@ -77,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// Send Message Function for Chatbot
 function sendMessage() {
     const input = document.getElementById("userInput");
     const message = input.value.trim();
@@ -86,7 +107,7 @@ function sendMessage() {
     chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
     input.value = "";
 
-    fetch("https://YOUR_BACKEND_URL/chat", {
+    fetch("https://chatbot-backend-ex31.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
@@ -101,10 +122,3 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
-
-
-fetch("https://chatbot-backend-ex31.onrender.com/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: message })
-})
