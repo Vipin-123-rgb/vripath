@@ -6,14 +6,27 @@
     <title>VIPIN TRIPATHI - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Animated Background with More Shades */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #87CEEB, #00BFFF, #8A2BE2, #FF69B4, #87CEEB);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Background Video -->
-    <video autoplay muted loop id="background-video" playsinline>
-        <source src="videos/background.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
     <!-- Navigation -->
     <div id="nav-placeholder">
         <nav>
@@ -33,8 +46,11 @@
         <a href="projects.html" class="btn">See My Work</a>
     </section>
 
+    <!-- Contact Icon -->
+    <img src="images/contact-icon.png" alt="Contact Me" class="contact-icon" id="contactIcon">
+
     <!-- Contact Form Section -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" style="display: none;">
         <h2>Contact Me</h2>
         <form action="https://formspree.io/f/xqapeezp" method="POST">
             <input type="text" name="name" placeholder="Your Name" required>
@@ -44,11 +60,11 @@
         </form>
     </section>
 
-<!-- Chatbot Icon -->
+    <!-- Chatbot Icon -->
     <img src="images/icon.png" alt="Chat with me" class="chatbot-icon" id="chatbotIcon">
     
     <!-- Chatbot Section -->
-    <div class="chat-container">
+    <div class="chat-container" id="chatContainer" style="display: none;">
         <div class="chat-box" id="chatBox">
             <div class="message bot">Bhai, mujhse baat kar! 'exit' likh kar band kar sakta hai.</div>
         </div>
