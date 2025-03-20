@@ -1,6 +1,6 @@
 console.log("Portfolio Loaded!");
 
-// Project hover effects (if used in projects.html)
+// Project hover effects (for projects.html)
 document.querySelectorAll('.project').forEach(item => {
     item.addEventListener('mouseover', () => {
         item.style.backgroundColor = '#f0f0f0';
@@ -15,7 +15,8 @@ fetch('nav.html')
     .then(response => response.text())
     .then(data => {
         document.getElementById('nav-placeholder').innerHTML = data;
-    });
+    })
+    .catch(error => console.error("Nav fetch failed:", error));
 
 // Contact form submission and toggle
 document.addEventListener('DOMContentLoaded', function () {
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 submitButton.textContent = 'Send Message';
-                console.error('Error:', error);
+                console.error('Form submission error:', error);
                 alert('There was a problem sending your message. Please try later.');
             });
         });
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const chatbotIcon = document.getElementById("chatbotIcon");
     const chatContainer = document.getElementById("chatContainer");
+    const userInput = document.getElementById("userInput");
 
     if (chatbotIcon && chatContainer) {
         chatbotIcon.addEventListener("click", function() {
@@ -89,11 +91,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Enter key se send karne ke liye
-        document.getElementById("userInput").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
+        if (userInput) {
+            userInput.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            });
+        }
     }
 });
 
@@ -112,13 +116,17 @@ function sendMessage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        return response.json();
+    })
     .then(data => {
         chatBox.innerHTML += `<div class="message bot">Chatbot: ${data.response}</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => {
-        chatBox.innerHTML += `<div class="message bot">Chatbot: Bhai, kuch gadbad ho gaya!</div>`;
+        console.error("Chatbot fetch error:", error);
+        chatBox.innerHTML += `<div class="message bot">Chatbot: Bhai, kuch gadbad ho gaya! (${error.message})</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
