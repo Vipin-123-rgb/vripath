@@ -34,6 +34,9 @@ app.post('/chat', async (req, res) => {
         console.error('Error:', error);
         res.status(500).json({ response: 'Bhai, kuch gadbad ho gaya!' });
     }
+
+    const cors = require('cors');
+app.use(cors());
 });
 
 // Server start
