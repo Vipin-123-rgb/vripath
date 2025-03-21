@@ -113,7 +113,7 @@ function sendMessage() {
     input.value = "";
 
     // Render backend call
-    fetch("https://vripath-backend.onrender.com", { 
+    fetch("https://vripath-backend.onrender.com/chat", { // Fixed URL with /chat endpoint
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
