@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Send Message Function for Chatbot
+// Send Message Function for Chatbot with Render Backend
 function sendMessage() {
     const input = document.getElementById("userInput");
     const message = input.value.trim();
@@ -109,9 +109,11 @@ function sendMessage() {
 
     const chatBox = document.getElementById("chatBox");
     chatBox.innerHTML += `<div class="message user">You: ${message}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
     input.value = "";
 
-    fetch("https://chatbot-backend-ex31.onrender.com/chat", {
+    // Render backend call
+    fetch("https://vripath-backend.onrender.com", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: message })
@@ -121,7 +123,8 @@ function sendMessage() {
         return response.json();
     })
     .then(data => {
-        chatBox.innerHTML += `<div class="message bot">Chatbot: ${data.response}</div>`;
+        const botReply = data.response;
+        chatBox.innerHTML += `<div class="message bot">Chatbot: ${botReply}</div>`;
         chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => {
