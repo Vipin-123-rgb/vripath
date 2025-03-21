@@ -4,7 +4,8 @@ const app = express();
 
 app.use(express.json());
 
-const XAI_API_KEY = process.env.OPENAI_API_KEY; 
+const XAI_API_KEY = process.env.OPENAI_API_KEY;
+
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
 
@@ -16,13 +17,14 @@ app.post('/chat', async (req, res) => {
                 'Authorization': `Bearer ${XAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: 'grok-beta', 
+                model: 'grok-beta',
                 messages: [{ role: 'user', content: userMessage }],
                 max_tokens: 150
             })
         });
 
         const data = await response.json();
+        console.log('xAI API Response:', data); // Debug ke liye
         if (!response.ok) throw new Error(data.error?.message || 'Unknown error');
         const botReply = data.choices[0].message.content;
 
